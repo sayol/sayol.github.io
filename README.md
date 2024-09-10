@@ -1,1 +1,0 @@
-# sayol.github.io
