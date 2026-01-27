@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Introduction – Say OL</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-8fd1faf6fd93e4e6d207ae0f9db51d78.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../assets/styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Say OL</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../courses.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#download" id="toc-download" class="nav-link active" data-scroll-target="#download">Download</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#installation-via-winget" id="toc-installation-via-winget" class="nav-link" data-scroll-target="#installation-via-winget">Installation via WinGet</a></li>
+  <li><a href="#launch-r-application" id="toc-launch-r-application" class="nav-link" data-scroll-target="#launch-r-application">Launch R Application</a></li>
+  <li><a href="#add-installed-r-directory-to-system-environment-variables-path" id="toc-add-installed-r-directory-to-system-environment-variables-path" class="nav-link" data-scroll-target="#add-installed-r-directory-to-system-environment-variables-path">Add Installed R Directory to System Environment Variables Path</a></li>
+  <li><a href="#find-the-location-of-r-executable-files" id="toc-find-the-location-of-r-executable-files" class="nav-link" data-scroll-target="#find-the-location-of-r-executable-files">Find the location of R executable files</a></li>
+  <li><a href="#configurate-r-with-jupyter-notebook-in-visual-studio-code" id="toc-configurate-r-with-jupyter-notebook-in-visual-studio-code" class="nav-link" data-scroll-target="#configurate-r-with-jupyter-notebook-in-visual-studio-code">Configurate R with Jupyter Notebook in Visual Studio Code</a></li>
+  <li><a href="#launch-the-jupyter-notebook" id="toc-launch-the-jupyter-notebook" class="nav-link" data-scroll-target="#launch-the-jupyter-notebook">Launch the Jupyter Notebook</a></li>
+  <li><a href="#r-and-jupyter-notebook-in-visual-studio-code" id="toc-r-and-jupyter-notebook-in-visual-studio-code" class="nav-link" data-scroll-target="#r-and-jupyter-notebook-in-visual-studio-code">R and Jupyter Notebook in Visual Studio Code</a></li>
+  <li><a href="#create-new-jupyter-notebook-file" id="toc-create-new-jupyter-notebook-file" class="nav-link" data-scroll-target="#create-new-jupyter-notebook-file">Create New Jupyter Notebook File</a></li>
+  <li><a href="#save-jupyter-notebook" id="toc-save-jupyter-notebook" class="nav-link" data-scroll-target="#save-jupyter-notebook">Save Jupyter Notebook</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#r-comments" id="toc-r-comments" class="nav-link" data-scroll-target="#r-comments">R Comments</a></li>
+  <li><a href="#r-variables-and-constants" id="toc-r-variables-and-constants" class="nav-link" data-scroll-target="#r-variables-and-constants">R Variables and Constants</a></li>
+  <li><a href="#data-types-and-r-constants" id="toc-data-types-and-r-constants" class="nav-link" data-scroll-target="#data-types-and-r-constants">Data Types and R Constants</a></li>
+  <li><a href="#list-of-built-in-constants-in-r" id="toc-list-of-built-in-constants-in-r" class="nav-link" data-scroll-target="#list-of-built-in-constants-in-r">List of Built-In Constants in R</a></li>
+  <li><a href="#r-print-output" id="toc-r-print-output" class="nav-link" data-scroll-target="#r-print-output">R Print Output</a></li>
+  <li><a href="#r-cat-function" id="toc-r-cat-function" class="nav-link" data-scroll-target="#r-cat-function">R <code>cat()</code> Function</a></li>
+  <li><a href="#r-numbers" id="toc-r-numbers" class="nav-link" data-scroll-target="#r-numbers">R Numbers</a></li>
+  <li><a href="#r-operators" id="toc-r-operators" class="nav-link" data-scroll-target="#r-operators">R Operators</a></li>
+  <li><a href="#r-docstring" id="toc-r-docstring" class="nav-link" data-scroll-target="#r-docstring">R Docstring</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages">R Packages</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">R Introduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="download" class="level2">
+<h2 class="anchored" data-anchor-id="download">Download</h2>
+<ul>
+<li>Go to <a href="https://cloud.r-project.org/">https://cloud.r-project.org/</a></li>
+<li>And then click on <em>Download R for Windows</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install1.png" class="img-fluid figure-img"></p>
+<figcaption>download page</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>base</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install2.png" class="img-fluid figure-img"></p>
+<figcaption>Download R for Windows</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Download R 4.5.1 for Windows</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install3.png" class="img-fluid figure-img"></p>
+<figcaption>Download R 4.5.1 for Windows</figcaption>
+</figure>
+</div>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<ul>
+<li>Find the downloaded R installer <em>R-4.5.1-win.exe</em> and double click on it to start the installation.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer.png" class="img-fluid figure-img"></p>
+<figcaption>R Installer</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>OK</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-select-language.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Select Language</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Next</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-license.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Accept License</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Next</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-select-location.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Select Location</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Next</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-select-components.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Select Components</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Next</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-startup-options.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Select Startup Options</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Next</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-select-additional-tasks.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Select Addtional Tasks</figcaption>
+</figure>
+</div>
+<ul>
+<li>Just wait until the installation is finished</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-installing.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Installing</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>Finish</em> button</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-finish.png" class="img-fluid figure-img"></p>
+<figcaption>Installation: Finish</figcaption>
+</figure>
+</div>
+</section>
+<section id="installation-via-winget" class="level2">
+<h2 class="anchored" data-anchor-id="installation-via-winget">Installation via WinGet</h2>
+<ul>
+<li>Launch <em>Windows PowerShell</em> and execute</li>
+</ul>
+<pre class="pwsh"><code>winget search "RProject"</code></pre>
+<ul>
+<li>Copy the id <em>RProject.R</em> and execute</li>
+</ul>
+<pre class="pwsh"><code>winget install RProject.R</code></pre>
+<ul>
+<li>If R is not already installed on the system, winget will donwload and install automatically.</li>
+<li>In case of already installed, the warning message is prompted as in the following screenshot.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-install-winget.png" class="img-fluid figure-img"></p>
+<figcaption>Installation via WinGet</figcaption>
+</figure>
+</div>
+</section>
+<section id="launch-r-application" class="level2">
+<h2 class="anchored" data-anchor-id="launch-r-application">Launch R Application</h2>
+<p>R comes with its <em>R Graphical User Interface</em> where you can 1. execute R script in console (R Console) 2. and develop R script in editor (R Editor)</p>
+<p>Follow these steps to get started * In the Windows search box type <em>Apps: R</em> * And then click on the <em>R Logo</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-launch.png" class="img-fluid figure-img"></p>
+<figcaption>Launch R</figcaption>
+</figure>
+</div>
+<ul>
+<li>This is how <em>R console</em> looks like</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-console.png" class="img-fluid figure-img"></p>
+<figcaption>R Console</figcaption>
+</figure>
+</div>
+<ul>
+<li>To open R script editor go to menu bar and click on <em>File</em> -&gt; <em>New script</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-new-editor.png" class="img-fluid figure-img"></p>
+<figcaption>R New Editor</figcaption>
+</figure>
+</div>
+<ul>
+<li>Write your first R script:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello R Programming!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-script.png" class="img-fluid figure-img"></p>
+<figcaption>R Script</figcaption>
+</figure>
+</div>
+<ul>
+<li>Go to menu bar and click on <em>File</em> -&gt; <em>Save</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-save-script.png" class="img-fluid figure-img"></p>
+<figcaption>Save R Script</figcaption>
+</figure>
+</div>
+<ul>
+<li>Choose an appropriate location and name your file <code>example.R</code></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-save-script-file.png" class="img-fluid figure-img"></p>
+<figcaption>Save R Script with Specified Location</figcaption>
+</figure>
+</div>
+<ul>
+<li>To run the saved R script go to menu bar and click on <em>Editor</em> -&gt; <em>Run all</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-run.png" class="img-fluid figure-img"></p>
+<figcaption>Run R Script</figcaption>
+</figure>
+</div>
+<ul>
+<li>The resulting output appears in the <em>R Console</em></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello R Programming!"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-output.png" class="img-fluid figure-img"></p>
+<figcaption>Output of R Script Run</figcaption>
+</figure>
+</div>
+</section>
+<section id="add-installed-r-directory-to-system-environment-variables-path" class="level2">
+<h2 class="anchored" data-anchor-id="add-installed-r-directory-to-system-environment-variables-path">Add Installed R Directory to System Environment Variables Path</h2>
+<ul>
+<li>Search for <em>Settings: Edit the system</em> and open it</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/environment-variable.png" class="img-fluid figure-img"></p>
+<figcaption>System Environment Variables</figcaption>
+</figure>
+</div>
+<ul>
+<li>Select the <em>Advanced</em> tap and then click on <em>Environment Variables</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/environment-variable-2.png" class="img-fluid figure-img"></p>
+<figcaption>Environment Variables: Step 2</figcaption>
+</figure>
+</div>
+<ul>
+<li>Under <em>User variables for [User]</em>, select <em>Path</em> and click on <em>edit</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/environment-variable-3.png" class="img-fluid figure-img"></p>
+<figcaption>Environment Variables: Step 3</figcaption>
+</figure>
+</div>
+<ul>
+<li>Click on <em>New</em> button and add the R executable directory (See the following steps how to get the directory)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/environment-variable-4.png" class="img-fluid figure-img"></p>
+<figcaption>Environment Variables: Step 4</figcaption>
+</figure>
+</div>
+</section>
+<section id="find-the-location-of-r-executable-files" class="level2">
+<h2 class="anchored" data-anchor-id="find-the-location-of-r-executable-files">Find the location of R executable files</h2>
+<ul>
+<li>To make sure that your have copy the correct location of the R executable directory, launch <em>File Explorer</em> by searching <em>Apps: File Explorer</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-explorer.png" class="img-fluid figure-img"></p>
+<figcaption>File Explorer</figcaption>
+</figure>
+</div>
+<ul>
+<li>Select drive <em>C:</em> and then open a folder called <em>Program Files</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-program-files.png" class="img-fluid figure-img"></p>
+<figcaption>Program Files</figcaption>
+</figure>
+</div>
+<ul>
+<li>Scroll down to find the subdirectory <em>R</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-r.png" class="img-fluid figure-img"></p>
+<figcaption>R Directory</figcaption>
+</figure>
+</div>
+<ul>
+<li>After that find and open <em>R-[version]</em>. For instance, <em>R-4.5.1</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-r-version.png" class="img-fluid figure-img"></p>
+<figcaption>R Version Directory</figcaption>
+</figure>
+</div>
+<ul>
+<li>Open the <em>bin</em> (binary) subfolder</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-bin.png" class="img-fluid figure-img"></p>
+<figcaption>Bin Directory</figcaption>
+</figure>
+</div>
+<ul>
+<li>Finally open the <em>x64</em> directory</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-x64.png" class="img-fluid figure-img"></p>
+<figcaption>x64 Directory</figcaption>
+</figure>
+</div>
+<ul>
+<li>Here where you can correctly copy the directory containing the R executable files</li>
+<li>Note that you have to place the mouse cursor at the end of <em>x64</em> in the box to copy the address</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-installer-location.png" class="img-fluid figure-img"></p>
+<figcaption>R Executable Location</figcaption>
+</figure>
+</div>
+</section>
+<section id="configurate-r-with-jupyter-notebook-in-visual-studio-code" class="level2">
+<h2 class="anchored" data-anchor-id="configurate-r-with-jupyter-notebook-in-visual-studio-code">Configurate R with Jupyter Notebook in Visual Studio Code</h2>
+<ul>
+<li><p>First, assuming that you have already install <em>Python</em> (and added path to the system environment variables) and <em>Jupyter</em></p></li>
+<li><p>To verify the installation of <strong>Python</strong> and <strong>Jupyter</strong>, launch the <em>Windows PowerShell</em> and execute the following shell script</p></li>
+</ul>
+<pre class="pwsh"><code>python --version</code></pre>
+<p>then</p>
+<pre class="pwsh"><code>jupyter --version</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/python-version.png" class="img-fluid figure-img"></p>
+<figcaption>Python Version</figcaption>
+</figure>
+</div>
+<ul>
+<li>If you have also configured correctly, you can launch <em>R Console</em> (R Terminal) in <em>Windows PowerShell</em> as</li>
+</ul>
+<pre class="pwsh"><code>rterm</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/rterm.png" class="img-fluid figure-img"></p>
+<figcaption>R Terminal</figcaption>
+</figure>
+</div>
+<ul>
+<li><p>Follow the instruction from <a href="https://github.com/IRkernel/IRkernel">https://github.com/IRkernel/IRkernel</a></p></li>
+<li><p>Download and install <code>IRkernel</code> with following script</p></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"IRkernel"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>There is probably a confirming panel to select the <em>Secure CRAN mirrors</em>, just leave selection the first one from the top and click <em>OK</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/irkernel-installation.png" class="img-fluid figure-img"></p>
+<figcaption>IRkernel Installation</figcaption>
+</figure>
+</div>
+<ul>
+<li>Then register the R kernel in the current R instalation by executing the following script</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>IRkernel<span class="sc">::</span><span class="fu">installspec</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/register-irkernel.png" class="img-fluid figure-img"></p>
+<figcaption>Register IRkernel</figcaption>
+</figure>
+</div>
+<ul>
+<li>If there is no warning or error message, it means you installed and registered successfully</li>
+<li>To quit the R console, execute the script</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">q</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>and then type</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>to confirm <em>not to save</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/quit-r-console.png" class="img-fluid figure-img"></p>
+<figcaption>Quit R Console</figcaption>
+</figure>
+</div>
+</section>
+<section id="launch-the-jupyter-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="launch-the-jupyter-notebook">Launch the Jupyter Notebook</h2>
+<ul>
+<li>Assume you have installed and configured correctly without error, you can now launch the <em>Jupyter Notebook</em> by executing the <em>Windows PowerShell</em> script as follow</li>
+</ul>
+<pre class="pwsh"><code>jupyter notebook</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/jupyter-notebook-launch.png" class="img-fluid figure-img"></p>
+<figcaption>Launch Jupyter Notebook</figcaption>
+</figure>
+</div>
+<ul>
+<li>After an internet browser is launch after executing script from the previous step, click on <em>New</em> (at the top-right corner) and choose <em>R</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/jupyter-notebook-browser.png" class="img-fluid figure-img"></p>
+<figcaption>Jupyter Notebook Browser</figcaption>
+</figure>
+</div>
+<ul>
+<li>After another tap is opened, write R script in the Jupyter Notebook code cell</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/jupyter-notebook-code-cell.png" class="img-fluid figure-img"></p>
+<figcaption>Jupyter Notebook Code Cell</figcaption>
+</figure>
+</div>
+<ul>
+<li>If you want to save the notebook just go to toolbar and choose <em>File</em> -&gt; <em>Save Notebook</em></li>
+<li>To shutdown the <em>Jupyter Notebook</em> and <em>R kernel</em> safely, go to toolbar and choose <em>Kernel</em> -&gt; <em>Shut Down All Kernels…</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/shutdown-jupyter-notebook.png" class="img-fluid figure-img"></p>
+<figcaption>Shut Down R Kernel</figcaption>
+</figure>
+</div>
+<ul>
+<li>Otherwise, come back to your <em>Windows PowerShell</em> and press <em>CTRL+C</em> on your keyboard</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/shutdown-jupyter-notebook-terminal.png" class="img-fluid figure-img"></p>
+<figcaption>Shutdown R Kernel from Terminal</figcaption>
+</figure>
+</div>
+</section>
+<section id="r-and-jupyter-notebook-in-visual-studio-code" class="level2">
+<h2 class="anchored" data-anchor-id="r-and-jupyter-notebook-in-visual-studio-code">R and Jupyter Notebook in Visual Studio Code</h2>
+<ul>
+<li>Assuming that you have already installed Visual Studio Code</li>
+<li>First, launch Visual Studio Code, click on the Extension icon then search for <em>REditorSupport</em> and install both <em>R Syntax</em> and <em>R</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-editor-support-1.png" class="img-fluid figure-img"></p>
+<figcaption>R Editor Support - R Syntax</figcaption>
+</figure>
+</div>
+<ul>
+<li>Copy the script <code>install.packages("languageserver")</code></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/r-editor-support-2.png" class="img-fluid figure-img"></p>
+<figcaption>R Editor Support - Extensions</figcaption>
+</figure>
+</div>
+<ul>
+<li>Install the R Language Server support by executing R script</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Search for and install the Jupyter extensions pack <em>Jupyter</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/jupyter-pack.png" class="img-fluid figure-img"></p>
+<figcaption>Jupyter Pack</figcaption>
+</figure>
+</div>
+</section>
+<section id="create-new-jupyter-notebook-file" class="level2">
+<h2 class="anchored" data-anchor-id="create-new-jupyter-notebook-file">Create New Jupyter Notebook File</h2>
+<ul>
+<li>Go to toolbar and choose <em>File</em> -&gt; <em>New File…</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/new-file.png" class="img-fluid figure-img"></p>
+<figcaption>New File</figcaption>
+</figure>
+</div>
+<ul>
+<li>Choose <em>Jupyter Notebook</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/new-file-jupyter-notebook.png" class="img-fluid figure-img"></p>
+<figcaption>New Jupyter Notebook File</figcaption>
+</figure>
+</div>
+</section>
+<section id="save-jupyter-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="save-jupyter-notebook">Save Jupyter Notebook</h2>
+<ul>
+<li>Go to toolbar and choose <em>File</em> -&gt; <em>Save As…</em></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/new-file-save-as.png" class="img-fluid figure-img"></p>
+<figcaption>Save As</figcaption>
+</figure>
+</div>
+<ul>
+<li>At the top right corner, click on <em>Select Kernel</em> and the choose <em>Jupyter Kernel…</em> from the palette</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/new-file-select-kernel.png" class="img-fluid figure-img"></p>
+<figcaption>Select Kernel</figcaption>
+</figure>
+</div>
+<ul>
+<li>Type some R script and execute</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../../assets/images/new-file-code-cell.png" class="img-fluid figure-img"></p>
+<figcaption>Code Cell in Jupyter Notebook</figcaption>
+</figure>
+</div>
+<ul>
+<li>Note that to format the R code, you have to click on the R logo extension icon on the left side (by default) of the Visual Studio Code window.</li>
+<li>To format a code cell, just place the mouse cursor in it and press <code>ALT+SHIFT+F</code>.</li>
+</ul>
+</section>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<ul>
+<li>To display string representation of an object, we can use <code>print()</code> generic function</li>
+</ul>
+<div id="cell-120" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Hello R Programming!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Hello R Programming!"</code></pre>
+</div>
+</div>
+</section>
+<section id="r-comments" class="level2">
+<h2 class="anchored" data-anchor-id="r-comments">R Comments</h2>
+<ul>
+<li>To comment a line of code in R, we add <code>#</code> to the begining of the line.</li>
+</ul>
+<div id="cell-122" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># declare variable</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">34</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(age) <span class="co"># print variable</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 34</code></pre>
+</div>
+</div>
+</section>
+<section id="r-variables-and-constants" class="level2">
+<h2 class="anchored" data-anchor-id="r-variables-and-constants">R Variables and Constants</h2>
+<ul>
+<li>As in another programming language, a variable changes its value when needed.</li>
+<li>Variable in <strong>R</strong> is not need to be declare before use.</li>
+<li>The data type (object type) in <strong>R</strong> is dynamic. It can be change from one another if needed.</li>
+<li>To assign value to a variable, we use <code>&lt;-</code> notation.</li>
+</ul>
+<div id="cell-124" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Object type</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.4</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="st">"R Programming"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(y))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(z))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(s))</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"
+[1] "numeric"
+[1] "numeric"
+[1] "character"
+[1] "logical"</code></pre>
+</div>
+</div>
+<div id="cell-125" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base type</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.4</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="st">"R Programming"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(y))</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(z))</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(s))</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(b))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "double"
+[1] "double"
+[1] "double"
+[1] "character"
+[1] "logical"</code></pre>
+</div>
+</div>
+<ul>
+<li>To display string representaion of an object, we can also use <code>str()</code> function</li>
+</ul>
+<div id="cell-127" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String representation</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.4</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="st">"R Programming"</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(x)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(y)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(z)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(s)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num 2
+ num 3.4
+ num 5.4
+ chr "R Programming"
+ logi TRUE</code></pre>
+</div>
+</div>
+<ul>
+<li>To modify value of a variable, just re-assign it.</li>
+</ul>
+<div id="cell-129" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># declare variable</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>message <span class="ot">&lt;-</span> <span class="st">"Programming"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># change value of a variable</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>message <span class="ot">&lt;-</span> <span class="st">"R Programming"</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print value of the variable</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(message)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R Programming"</code></pre>
+</div>
+</div>
+</section>
+<section id="data-types-and-r-constants" class="level2">
+<h2 class="anchored" data-anchor-id="data-types-and-r-constants">Data Types and R Constants</h2>
+<ul>
+<li>In R, we have the following types of constants.</li>
+<li>The five types of R constants - <code>numeric</code>, <code>integer</code>, <code>complex</code>, <code>logical</code>, <code>string</code>.</li>
+<li>In addition to these, there are 4 specific types of R constants - <code>Null</code>, <code>NA</code>, <code>Inf</code>, <code>NaN</code>.</li>
+</ul>
+<div id="cell-131" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constant of type `numeric` (`integer` in this case)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">15</span>L</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15
+[1] "integer"
+[1] "integer"</code></pre>
+</div>
+</div>
+<div id="cell-132" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># hexadicimal value</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0x15</span>L</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># exponential value</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">1e15</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(y)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(y))</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21
+[1] "integer"
+[1] "integer"
+[1] 1e+15
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-133" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">2.25e-5</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.14</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(y)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(y))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.25e-05
+[1] "numeric"
+[1] "double"
+[1] 3.14
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-134" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complex Constant</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">4.5</span>i</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(z))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3+4.5i
+[1] "complex"
+[1] "complex"</code></pre>
+</div>
+</div>
+<div id="cell-135" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logical Constant</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(y)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(y))</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE
+[1] "logical"
+[1] "logical"
+[1] FALSE
+[1] "logical"
+[1] "logical"</code></pre>
+</div>
+</div>
+<div id="cell-136" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String Constants</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>message <span class="ot">&lt;-</span> <span class="st">"R Programming"</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(message)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(message))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(message))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R Programming"
+[1] "character"
+[1] "character"</code></pre>
+</div>
+</div>
+<div id="cell-137" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Special R Constants</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co"># empty R object</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL
+[1] "NULL"
+[1] "NULL"</code></pre>
+</div>
+</div>
+<div id="cell-138" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `Inf` - represents positive infinity</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span><span class="dv">2023</span> <span class="co"># positive infinity</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Inf
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-139" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `-Inf` - represents negative infinity</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="cn">Inf</span> <span class="co"># negative infinity</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -Inf
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-140" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `NaN` (Not a Number) - represents undefined numerical value</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">/</span> <span class="dv">0</span> <span class="co"># NaN</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">Inf</span> <span class="sc">/</span> <span class="cn">Inf</span> <span class="co"># NaN</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NaN
+[1] "numeric"
+[1] "double"
+[1] NaN
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-141" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `NA` - represents value which is not available</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="cn">NA</span> <span class="sc">+</span> <span class="dv">5</span> <span class="co"># NA</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-142" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># raw data type</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">charToRaw</span>(<span class="st">"R Programming"</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(data)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(data))</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(data))</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">rawToChar</span>(data)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(data)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(data))</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(data))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 52 20 50 72 6f 67 72 61 6d 6d 69 6e 67
+[1] "raw"
+[1] "raw"
+[1] "R Programming"
+[1] "character"
+[1] "character"</code></pre>
+</div>
+</div>
+<div id="cell-143" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Built-In R Constants</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(LETTERS) <span class="co"># uppercase letters</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(letters) <span class="co"># lowercase letters</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(month.abb) <span class="co"># month abbreviation</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(month.name) <span class="co"># month name</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pi) <span class="co"># constant pi = 3.14...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S"
+[20] "T" "U" "V" "W" "X" "Y" "Z"
+ [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+[20] "t" "u" "v" "w" "x" "y" "z"
+ [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"
+ [1] "January"   "February"  "March"     "April"     "May"       "June"     
+ [7] "July"      "August"    "September" "October"   "November"  "December" 
+[1] 3.141593</code></pre>
+</div>
+</div>
+</section>
+<section id="list-of-built-in-constants-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="list-of-built-in-constants-in-r">List of Built-In Constants in R</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 40%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Constant</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LETTERS</code></td>
+<td>Uppercase English letters</td>
+<td><code>LETTERS[1:3] -&gt; "A" "B" "C"</code></td>
+</tr>
+<tr class="even">
+<td><code>letters</code></td>
+<td>Lowercase English letters</td>
+<td><code>letters[1:3] -&gt; "a" "b" "c"</code></td>
+</tr>
+<tr class="odd">
+<td><code>month.name</code></td>
+<td>Full month names</td>
+<td><code>month.name[1:3] -&gt; "January" "February" "March"</code></td>
+</tr>
+<tr class="even">
+<td><code>month.abb</code></td>
+<td>Abbreviated month names</td>
+<td><code>month.abb[1:3] -&gt; "Jan" "Feb" "Mar"</code></td>
+</tr>
+<tr class="odd">
+<td><code>pi</code></td>
+<td>The mathematical constant <span class="math inline">\(\pi\)</span> (<span class="math inline">\(\pi\approx 3.141593\)</span>)</td>
+<td><code>pi * 2 -&gt; 6.283185</code></td>
+</tr>
+<tr class="even">
+<td><code>Inf</code>, <code>-Inf</code></td>
+<td>Positive and negative infinity</td>
+<td><code>1 / 0 -&gt; Inf</code></td>
+</tr>
+<tr class="odd">
+<td><code>NaN</code></td>
+<td>Not a Number</td>
+<td><code>0 / 0 -&gt; NaN</code></td>
+</tr>
+<tr class="even">
+<td><code>NA</code></td>
+<td>Generic missing value (logical by default)</td>
+<td><code>x &lt;- NA</code></td>
+</tr>
+<tr class="odd">
+<td><code>NA_integer_</code></td>
+<td>Missing value of integer type</td>
+<td><code>typeof(NA_integer_) -&gt; "integer"</code></td>
+</tr>
+<tr class="even">
+<td><code>NA_real_</code></td>
+<td>Missing value of double type</td>
+<td><code>typeof(NA_real_) -&gt; "double"</code></td>
+</tr>
+<tr class="odd">
+<td><code>NA_complex_</code></td>
+<td>Missing value of complex type</td>
+<td><code>typeof(NA_complex_) -&gt; "complex"</code></td>
+</tr>
+<tr class="even">
+<td><code>NA_character_</code></td>
+<td>Missing value of character type</td>
+<td><code>typeof(NA_character_) -&gt; "character"</code></td>
+</tr>
+<tr class="odd">
+<td><code>TRUE</code>, <code>FALSE</code></td>
+<td>Logical constants (can also use <code>T</code>, <code>F</code>)</td>
+<td><code>TRUE &amp; FALSE -&gt; FALSE</code></td>
+</tr>
+<tr class="even">
+<td><code>NULL</code></td>
+<td>Empty/null object</td>
+<td><code>x &lt;- NULL</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-print-output" class="level2">
+<h2 class="anchored" data-anchor-id="r-print-output">R Print Output</h2>
+<div id="cell-147" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print value</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"R Programming"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print variable</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">"Start our journey here :D"</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R Programming"
+[1] "Start our journey here :D"</code></pre>
+</div>
+</div>
+<div id="cell-148" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paste string and variable together</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>language <span class="ot">&lt;-</span> <span class="st">"R"</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Welcome to"</span>, language))</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Welcome to"</span>, language)) <span class="co"># without separater</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Welcome to"</span>, language, <span class="at">sep =</span> <span class="st">""</span>)) <span class="co"># without separater</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Welcome to R"
+[1] "Welcome toR"
+[1] "Welcome toR"</code></pre>
+</div>
+</div>
+<div id="cell-149" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># `sprintf()` function from C programming</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>language <span class="ot">&lt;-</span> <span class="st">"R"</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sprintf</span>(<span class="st">"Welcome to %s"</span>, language) <span class="co"># print formatted string</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+'Welcome to R'
+</div>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Specifier</th>
+<th>Value Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>%c</code></td>
+<td>Character</td>
+</tr>
+<tr class="even">
+<td><code>%d</code> or <code>%i</code></td>
+<td>Signed Decimal Integer</td>
+</tr>
+<tr class="odd">
+<td><code>%e</code> or <code>%E</code></td>
+<td>Scientific notation</td>
+</tr>
+<tr class="even">
+<td><code>%f</code></td>
+<td>Decimal Floating Point</td>
+</tr>
+<tr class="odd">
+<td><code>%u</code></td>
+<td>Unsigned Decimal Integer</td>
+</tr>
+<tr class="even">
+<td><code>%p</code></td>
+<td>Pointer address</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-cat-function" class="level2">
+<h2 class="anchored" data-anchor-id="r-cat-function">R <code>cat()</code> Function</h2>
+<p>R programming also provides the <code>cat()</code> function to print variables. However, unlike <code>print()</code>, the <code>cat()</code> function is only used with basic types like logical, integer, character, etc.</p>
+<div id="cell-152" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print using `cat()` function</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Hello</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Programming</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>word <span class="ot">&lt;-</span> <span class="st">"User"</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Goodbye"</span>, word, <span class="at">sep =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello   R   Programming
+Goodbye User</code></pre>
+</div>
+</div>
+</section>
+<section id="r-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="r-numbers">R Numbers</h2>
+<p>Numbers in R can be divided into 3 different categories:</p>
+<ul>
+<li><strong>Numeric:</strong> It represents both whole and floating-point numbers. For example, <code>123</code>, <code>32.43</code>, etc.</li>
+<li><strong>Integer:</strong> It represents only whole numbers and is denoted by <code>L</code>. For example, <code>23L</code>, <code>39L</code>, etc.</li>
+<li><strong>Complex:</strong> It represents complex numbers with imaginary parts. The imaginary parts are denoted by <code>i</code>. For example, <code>2 + 3i</code>, <code>5i</code>, etc.</li>
+</ul>
+<div id="cell-154" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.14</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>plus <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(x))</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(x))</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(y)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(y))</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(y))</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(plus)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(plus))</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(plus))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2
+[1] "numeric"
+[1] "double"
+[1] 3.14
+[1] "numeric"
+[1] "double"
+[1] 5.14
+[1] "numeric"
+[1] "double"</code></pre>
+</div>
+</div>
+<div id="cell-155" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fl">3.14</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">4</span>i</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>alg <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">3</span> <span class="sc">*</span> y <span class="sc">+</span> z<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(z)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(z))</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(z))</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(alg)</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">class</span>(alg))</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">typeof</span>(alg))</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">exp</span>(pi <span class="sc">*</span> <span class="dv">1</span>i))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3+4i
+[1] "complex"
+[1] "complex"
+[1] -12.42+24i
+[1] "complex"
+[1] "complex"
+[1] -1+1.224606e-16i</code></pre>
+</div>
+</div>
+<div id="cell-156" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">4</span>i</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Re</span>(z))</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Im</span>(z))</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Mod</span>(z))</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Arg</span>(z))</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Conj</span>(z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3
+[1] 4
+[1] 5
+[1] 0.9272952
+[1] 3-4i</code></pre>
+</div>
+</div>
+</section>
+<section id="r-operators" class="level2">
+<h2 class="anchored" data-anchor-id="r-operators">R Operators</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 31%">
+<col style="width: 32%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Category</strong></th>
+<th><strong>Operator(s)</strong></th>
+<th><strong>Description / Use</strong></th>
+<th><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Arithmetic</strong></td>
+<td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>, <code>%%</code>, <code>%/%</code></td>
+<td>Basic math: add, subtract, multiply, divide, power, modulo</td>
+<td><code>5 + 2</code>, <code>7 %% 3</code>, <code>2^3</code></td>
+</tr>
+<tr class="even">
+<td><strong>Relational / Comparison</strong></td>
+<td><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></td>
+<td>Compare values (returns logical)</td>
+<td><code>5 &gt; 3</code>, <code>x == y</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Assignment</strong></td>
+<td><code>&lt;-</code>, <code>-&gt;</code>, <code>=</code>, <code>&lt;&lt;-</code>, <code>-&gt;&gt;</code></td>
+<td>Assign values to variables</td>
+<td><code>x &lt;- 10</code>, <code>10 -&gt; x</code></td>
+</tr>
+<tr class="even">
+<td><strong>Logical</strong></td>
+<td><code>&amp;</code>, <code>&amp;&amp;</code>, <code>\|</code>,<code>!</code></td>
+<td>Logical operations (AND, OR, NOT)</td>
+<td><code>TRUE &amp; FALSE</code>, <code>!TRUE</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Membership</strong></td>
+<td><code>%in%</code></td>
+<td>Checks if elements belong to a vector</td>
+<td><code>2 %in% c(1,2,3)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Sequence / Repetition</strong></td>
+<td><code>:</code>, <code>seq()</code>, <code>rep()</code></td>
+<td>Generate sequences or repeated elements</td>
+<td><code>1:5</code>, <code>rep(2, 3)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Miscellaneous</strong></td>
+<td><code>is.*</code>, <code>as.*</code>, <code>typeof</code>, <code>length</code></td>
+<td>Type checks, coercion, length</td>
+<td><code>is.numeric(5)</code>, <code>length(v)</code></td>
+</tr>
+<tr class="even">
+<td><strong>Matrix / Array</strong></td>
+<td><code>%*%</code>, <code>t()</code>, <code>crossprod()</code></td>
+<td>Matrix multiplication, transpose</td>
+<td><code>A %*% B</code>, <code>t(A)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Indexing / Subsetting</strong></td>
+<td><code>[ ]</code>, <code>[[ ]]</code>, <code>$</code></td>
+<td>Access elements of vectors, lists, or data frames</td>
+<td><code>v[1]</code>, <code>lst[[2]]</code>, <code>df$col</code></td>
+</tr>
+<tr class="even">
+<td><strong>Set Operations</strong></td>
+<td><code>union()</code>, <code>intersect()</code>, <code>setdiff()</code></td>
+<td>Set logic on vectors</td>
+<td><code>union(a, b)</code></td>
+</tr>
+<tr class="odd">
+<td><strong>String Operators</strong></td>
+<td><code>paste()</code>, <code>paste0()</code>, <code>nchar()</code>, <code>substr()</code></td>
+<td>String manipulation</td>
+<td><code>paste("a", "b")</code>, <code>nchar("abc")</code></td>
+</tr>
+<tr class="even">
+<td><strong>Control Flow</strong></td>
+<td><code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>repeat</code>, <code>break</code>, <code>next</code></td>
+<td>Used for loops and conditions</td>
+<td><code>if (x &gt; 0) {...}</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Formula / Model</strong></td>
+<td><code>~</code></td>
+<td>Used in formulas for models or tibbles</td>
+<td><code>y ~ x</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="r-docstring" class="level2">
+<h2 class="anchored" data-anchor-id="r-docstring">R Docstring</h2>
+<ul>
+<li>To see the docstring of an R function, type <code>??function_name</code>.</li>
+<li>We can also use the base function <code>help()</code> to see the docstring of a function or package.</li>
+</ul>
+<div id="cell-161" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">topic =</span> print)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>print                   package:base                   R Documentation
+
+_P_r_i_n_t _V_a_l_u_e_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     'print' prints its argument and returns it _invisibly_ (via
+     'invisible(x)').  It is a generic function which means that new
+     printing methods can be easily added for new 'class'es.
+
+_U_s_a_g_e:
+
+     print(x, ...)
+     
+     ## S3 method for class 'factor'
+     print(x, quote = FALSE, max.levels = NULL,
+           width = getOption("width"), ...)
+     
+     ## S3 method for class 'table'
+     print(x, digits = getOption("digits"), quote = FALSE,
+           na.print = "", zero.print = "0",
+           right = is.numeric(x) || is.complex(x),
+           justify = "none", ...)
+     
+     ## S3 method for class 'function'
+     print(x, useSource = TRUE, ...)
+     
+_A_r_g_u_m_e_n_t_s:
+
+       x: an object used to select a method.
+
+     ...: further arguments passed to or from other methods.
+
+   quote: logical, indicating whether or not strings should be printed
+          with surrounding quotes.
+
+max.levels: integer, indicating how many levels should be printed for a
+          factor; if '0', no extra "Levels" line will be printed.  The
+          default, 'NULL', entails choosing 'max.levels' such that the
+          levels print on one line of width 'width'.
+
+   width: only used when 'max.levels' is NULL, see above.
+
+  digits: minimal number of _significant_ digits, see 'print.default'.
+
+na.print: character string (or 'NULL') indicating 'NA' values in
+          printed output, see 'print.default'.
+
+zero.print: character specifying how zeros ('0') should be printed; for
+          sparse tables, using '"."' can produce more readable results,
+          similar to printing sparse matrices in 'Matrix'.
+
+   right: logical, indicating whether or not strings should be right
+          aligned.
+
+ justify: character indicating if strings should left- or
+          right-justified or left alone, passed to 'format'.
+
+useSource: logical indicating if internally stored source should be
+          used for printing when present, e.g., if 'options(keep.source
+          = TRUE)' has been in use.
+
+_D_e_t_a_i_l_s:
+
+     The default method, 'print.default' has its own help page.  Use
+     'methods("print")' to get all the methods for the 'print' generic.
+
+     'print.factor' allows some customization and is used for printing
+     'ordered' factors as well.
+
+     'print.table' for printing 'table's allows other customization.
+     As of R 3.0.0, it only prints a description in case of a table
+     with 0-extents (this can happen if a classifier has no valid
+     data).
+
+     See 'noquote' as an example of a class whose main purpose is a
+     specific 'print' method.
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Chambers, J. M. and Hastie, T. J. (1992) _Statistical Models in
+     S._ Wadsworth &amp; Brooks/Cole.
+
+_S_e_e _A_l_s_o:
+
+     The default method 'print.default', and help for the methods
+     above; further 'options', 'noquote'.
+
+     For more customizable (but cumbersome) printing, see 'cat',
+     'format' or also 'write'.  For a simple prototypical print method,
+     see '.print.via.format' in package 'tools'.
+
+_E_x_a_m_p_l_e_s:
+
+     require(stats)
+     
+     ts(1:20)  #-- print is the "Default function" --&gt; print.ts(.) is called
+     for(i in 1:3) print(1:i)
+     
+     ## Printing of factors
+     attenu$station ## 117 levels -&gt; 'max.levels' depending on width
+     
+     ## ordered factors: levels  "l1 &lt; l2 &lt; .."
+     esoph$agegp[1:12]
+     esoph$alcgp[1:12]
+     
+     ## Printing of sparse (contingency) tables
+     set.seed(521)
+     t1 &lt;- round(abs(rt(200, df = 1.8)))
+     t2 &lt;- round(abs(rt(200, df = 1.4)))
+     table(t1, t2) # simple
+     print(table(t1, t2), zero.print = ".") # nicer to read
+     
+     ## same for non-integer "table":
+     T &lt;- table(t2,t1)
+     T &lt;- T * (1+round(rlnorm(length(T)))/4)
+     print(T, zero.print = ".") # quite nicer,
+     print.table(T[,2:8] * 1e9, digits=3, zero.print = ".")
+     ## still slightly inferior to  Matrix::Matrix(T)  for larger T
+     
+     ## Corner cases with empty extents:
+     table(1, NA) # &lt; table of extent 1 x 0 &gt;
+     </code></pre>
+</div>
+</div>
+<ul>
+<li>As you can see in the docstring, the positional and required parameter of the <code>print()</code> function is <code>x</code></li>
+<li>So, we can use the <code>print()</code> function in the form of <code>key = value</code> as the following way without any error or warning.</li>
+</ul>
+<div id="cell-163" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="at">x =</span> <span class="st">"Message"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Message"</code></pre>
+</div>
+</div>
+</section>
+<section id="r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
+<ol type="1">
+<li><p>To get a table with details of all installed packages in <strong>R</strong>, we use <code>installed.packages()</code>.</p></li>
+<li><p>If we only want the packages’ name, wrap it with <code>rownames()</code>.</p></li>
+</ol>
+<div id="cell-166" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(<span class="fu">installed.packages</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'abind'</li><li>'afex'</li><li>'askpass'</li><li>'backports'</li><li>'base64enc'</li><li>'BayesFactor'</li><li>'bayestestR'</li><li>'beeswarm'</li><li>'bit'</li><li>'bit64'</li><li>'blob'</li><li>'brew'</li><li>'brio'</li><li>'broom'</li><li>'bslib'</li><li>'BWStest'</li><li>'cachem'</li><li>'callr'</li><li>'car'</li><li>'carData'</li><li>'cellranger'</li><li>'checkmate'</li><li>'classInt'</li><li>'cli'</li><li>'clipr'</li><li>'clock'</li><li>'coda'</li><li>'collections'</li><li>'colorspace'</li><li>'commonmark'</li><li>'conflicted'</li><li>'contfrac'</li><li>'coro'</li><li>'correlation'</li><li>'cowplot'</li><li>'cpp11'</li><li>'crayon'</li><li>'credentials'</li><li>'crosstalk'</li><li>'curl'</li><li>'data.table'</li><li>'data.tree'</li><li>'DataExplorer'</li><li>'datamods'</li><li>'datawizard'</li><li>'DBI'</li><li>'dbplyr'</li><li>'Deriv'</li><li>'desc'</li><li>'deSolve'</li><li>'devtools'</li><li>'diagram'</li><li>'dials'</li><li>'DiceDesign'</li><li>'diffobj'</li><li>'digest'</li><li>'doBy'</li><li>'doFuture'</li><li>'downlit'</li><li>'dplyr'</li><li>'dtplyr'</li><li>'e1071'</li><li>'effectsize'</li><li>'ellipsis'</li><li>'elliptic'</li><li>'esquisse'</li><li>'evaluate'</li><li>'fansi'</li><li>'farver'</li><li>'fastmap'</li><li>'fontawesome'</li><li>'forcats'</li><li>'foreach'</li><li>'Formula'</li><li>'fs'</li><li>'furrr'</li><li>'future'</li><li>'future.apply'</li><li>'gapminder'</li><li>'gargle'</li><li>'generics'</li><li>'gert'</li><li>'GGally'</li><li>'gganimate'</li><li>'ggbeeswarm'</li><li>'ggcorrplot'</li><li>'ggplot2'</li><li>'ggpubr'</li><li>'ggrastr'</li><li>'ggrepel'</li><li>'ggsci'</li><li>'ggside'</li><li>'ggsignif'</li><li>'ggstats'</li><li>'ggstatsplot'</li><li>'gh'</li><li>'gifski'</li><li>'gitcreds'</li><li>'globals'</li><li>'glue'</li><li>'gmp'</li><li>'googledrive'</li><li>'googlesheets4'</li><li>'gower'</li><li>'GPfit'</li><li>'gridExtra'</li><li>'gtable'</li><li>'hardhat'</li><li>'haven'</li><li>'highr'</li><li>'Hmisc'</li><li>'hms'</li><li>'htmlTable'</li><li>'htmltools'</li><li>'htmlwidgets'</li><li>'httpuv'</li><li>'httr'</li><li>'httr2'</li><li>'hypergeo'</li><li>'ids'</li><li>'igraph'</li><li>'infer'</li><li>'ini'</li><li>'insight'</li><li>'ipred'</li><li>'IRdisplay'</li><li>'IRkernel'</li><li>'isoband'</li><li>'iterators'</li><li>'jquerylib'</li><li>'jsonlite'</li><li>'knitr'</li><li>'kSamples'</li><li>'labeling'</li><li>'languageserver'</li><li>'later'</li><li>'lava'</li><li>'lazyeval'</li><li>'lhs'</li><li>'lifecycle'</li><li>'lintr'</li><li>'listenv'</li><li>'lme4'</li><li>'lmerTest'</li><li>'lpSolve'</li><li>'lubridate'</li><li>'magrittr'</li><li>'MatrixModels'</li><li>'memoise'</li><li>'microbenchmark'</li><li>'mime'</li><li>'miniUI'</li><li>'minqa'</li><li>'modeldata'</li><li>'modelenv'</li><li>'modelr'</li><li>'multcompView'</li><li>'mvtnorm'</li><li>'networkD3'</li><li>'nloptr'</li><li>'numDeriv'</li><li>'openssl'</li><li>'openxlsx'</li><li>'pak'</li><li>'paletteer'</li><li>'palmerpenguins'</li><li>'parallelly'</li><li>'parameters'</li><li>'parsnip'</li><li>'patchwork'</li><li>'pbapply'</li><li>'pbdZMQ'</li><li>'pbkrtest'</li><li>'performance'</li><li>'phosphoricons'</li><li>'pillar'</li><li>'pkgbuild'</li><li>'pkgconfig'</li><li>'pkgdown'</li><li>'pkgload'</li><li>'plotly'</li><li>'plotrix'</li><li>'plyr'</li><li>'PMCMRplus'</li><li>'png'</li><li>'polynom'</li><li>'praise'</li><li>'prettyunits'</li><li>'prismatic'</li><li>'processx'</li><li>'prodlim'</li><li>'profvis'</li><li>'progress'</li><li>'progressr'</li><li>'promises'</li><li>'proxy'</li><li>'ps'</li><li>'purrr'</li><li>'quantreg'</li><li>'R.cache'</li><li>'R.methodsS3'</li><li>'R.oo'</li><li>'R.utils'</li><li>'R6'</li><li>'ragg'</li><li>'rappdirs'</li><li>'rbibutils'</li><li>'rcmdcheck'</li><li>'RColorBrewer'</li><li>'Rcpp'</li><li>'RcppEigen'</li><li>'RcppParallel'</li><li>'Rdpack'</li><li>'reactable'</li><li>'reactR'</li><li>'readr'</li><li>'readxl'</li><li>'recipes'</li><li>'reformulas'</li><li>'rematch'</li><li>'rematch2'</li><li>'remotes'</li><li>'repr'</li><li>'reprex'</li><li>'reshape'</li><li>'reshape2'</li><li>'rex'</li><li>'rio'</li><li>'rlang'</li><li>'rmarkdown'</li><li>'Rmpfr'</li><li>'roxygen2'</li><li>'rprojroot'</li><li>'rsample'</li><li>'rstantools'</li><li>'rstatix'</li><li>'rstudioapi'</li><li>'rversions'</li><li>'rvest'</li><li>'s2'</li><li>'S7'</li><li>'safetensors'</li><li>'sass'</li><li>'scales'</li><li>'selectr'</li><li>'sessioninfo'</li><li>'sf'</li><li>'sfd'</li><li>'shape'</li><li>'shiny'</li><li>'shinybusy'</li><li>'shinyWidgets'</li><li>'slider'</li><li>'sourcetools'</li><li>'SparseM'</li><li>'sparsevctrs'</li><li>'SQUAREM'</li><li>'statsExpressions'</li><li>'stringi'</li><li>'stringr'</li><li>'styler'</li><li>'SuppDists'</li><li>'sys'</li><li>'systemfonts'</li><li>'testthat'</li><li>'textshaping'</li><li>'tibble'</li><li>'tidymodels'</li><li>'tidyplots'</li><li>'tidyr'</li><li>'tidyselect'</li><li>'tidyverse'</li><li>'timechange'</li><li>'timeDate'</li><li>'tinytex'</li><li>'toastui'</li><li>'torch'</li><li>'transformr'</li><li>'tune'</li><li>'tweenr'</li><li>'tzdb'</li><li>'units'</li><li>'urlchecker'</li><li>'usethis'</li><li>'utf8'</li><li>'uuid'</li><li>'vctrs'</li><li>'viridis'</li><li>'viridisLite'</li><li>'vroom'</li><li>'waldo'</li><li>'warp'</li><li>'whisker'</li><li>'withr'</li><li>'wk'</li><li>'workflows'</li><li>'workflowsets'</li><li>'writexl'</li><li>'WRS2'</li><li>'xfun'</li><li>'xgboost'</li><li>'xml2'</li><li>'xmlparsedata'</li><li>'xopen'</li><li>'xtable'</li><li>'yaml'</li><li>'yardstick'</li><li>'zeallot'</li><li>'zip'</li><li>'base'</li><li>'boot'</li><li>'class'</li><li>'cluster'</li><li>'codetools'</li><li>'compiler'</li><li>'datasets'</li><li>'foreign'</li><li>'graphics'</li><li>'grDevices'</li><li>'grid'</li><li>'KernSmooth'</li><li>'lattice'</li><li>'MASS'</li><li>'Matrix'</li><li>'methods'</li><li>'mgcv'</li><li>'nlme'</li><li>'nnet'</li><li>'parallel'</li><li>'rpart'</li><li>'spatial'</li><li>'splines'</li><li>'stats'</li><li>'stats4'</li><li>'survival'</li><li>'tcltk'</li><li>'tools'</li><li>'translations'</li><li>'utils'</li></ol>
+</div>
+</div>
+<p>In a similar mainer, available packages from the Comprehensive R Archive Network can be access via <code>available.packages()</code>.</p>
+<div id="cell-168" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(<span class="fu">available.packages</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<style>
+.list-inline {list-style: none; margin:0; padding: 0}
+.list-inline>li {display: inline-block}
+.list-inline>li:not(:last-child)::after {content: "\00b7"; padding: 0 .5ex}
+</style>
+<ol class="list-inline"><li>'AalenJohansen'</li><li>'aamatch'</li><li>'AATtools'</li><li>'ABACUS'</li><li>'abasequence'</li><li>'abbreviate'</li><li>'abc'</li><li>'abc.data'</li><li>'ABC.RAP'</li><li>'ABCanalysis'</li><li>'abclass'</li><li>'ABCoptim'</li><li>'abcrf'</li><li>'abcrlda'</li><li>'abctools'</li><li>'abd'</li><li>'abdiv'</li><li>'abe'</li><li>'aberrance'</li><li>'abess'</li><li>'abglasso'</li><li>'ABHgenotypeR'</li><li>'abima'</li><li>'abind'</li><li>'abjData'</li><li>'abjutils'</li><li>'ablasso'</li><li>'ABM'</li><li>'abms'</li><li>'abn'</li><li>'abnormality'</li><li>'abodOutlier'</li><li>'ABPS'</li><li>'ABRSQOL'</li><li>'abseil'</li><li>'absorber'</li><li>'abstr'</li><li>'abstractr'</li><li>'ABSurvTDC'</li><li>'abtest'</li><li>'abundant'</li><li>'Ac3net'</li><li>'ACA'</li><li>'AcademicThemes'</li><li>'academictwitteR'</li><li>'acc'</li><li>'acca'</li><li>'accelerometry'</li><li>'accelmissing'</li><li>'AccelStab'</li><li>'accept'</li><li>'AcceptanceSampling'</li><li>'AcceptReject'</li><li>'accessibility'</li><li>'accessr'</li><li>'accessrmd'</li><li>'accrual'</li><li>'accrualPlot'</li><li>'AccSamplingDesign'</li><li>'accSDA'</li><li>'accucor'</li><li>'accumulate'</li><li>'acdcquery'</li><li>'acdcR'</li><li>'ACDm'</li><li>'ACE.CoCo'</li><li>'ace2fastq'</li><li>'acebayes'</li><li>'aceEditor'</li><li>'ACEP'</li><li>'acepack'</li><li>'ACEsearch'</li><li>'ACEsimFit'</li><li>'ACEt'</li><li>'acfMPeriod'</li><li>'Achilles'</li><li>'acid'</li><li>'acled.api'</li><li>'acledR'</li><li>'ACNE'</li><li>'acnr'</li><li>'acopula'</li><li>'acoRn'</li><li>'acp'</li><li>'acro'</li><li>'acroname'</li><li>'acss'</li><li>'acss.data'</li><li>'ACSSpack'</li><li>'ACSWR'</li><li>'act'</li><li>'ACTCD'</li><li>'ActCR'</li><li>'actel'</li><li>'ActFrag'</li><li>'actfts'</li><li>'actilifecounts'</li><li>'ActiSleep'</li><li>'activAnalyzer'</li><li>'activatr'</li><li>'ActiveDriver'</li><li>'activegp'</li><li>'ActivePathways'</li><li>'activity'</li><li>'activityCounts'</li><li>'ActivityIndex'</li><li>'activPAL'</li><li>'actLifer'</li><li>'actogrammr'</li><li>'actuar'</li><li>'actuaRE'</li><li>'ActuarialM'</li><li>'actuaryr'</li><li>'actxps'</li><li>'AcuityView'</li><li>'acumos'</li><li>'ACV'</li><li>'ACWR'</li><li>'ada'</li><li>'adabag'</li><li>'adace'</li><li>'adagio'</li><li>'adaHuber'</li><li>'adamethods'</li><li>'adana'</li><li>'AdapSamp'</li><li>'adapt3'</li><li>'adapt4pv'</li><li>'adaptalint'</li><li>'adaptDiag'</li><li>'AdaptGauss'</li><li>'adaptiveGPCA'</li><li>'adaptivetau'</li><li>'adaptIVPT'</li><li>'adaptMCMC'</li><li>'adaptMT'</li><li>'adaptr'</li><li>'ADAPTS'</li><li>'adaptsmoFMRI'</li><li>'adaptTest'</li><li>'adaR'</li><li>'adas.utils'</li><li>'AdaSampling'</li><li>'adass'</li><li>'adbcdrivermanager'</li><li>'adbcpostgresql'</li><li>'adbcsqlite'</li><li>'adbi'</li><li>'adc'</li><li>'ADCT'</li><li>'add2ggplot'</li><li>'addhaz'</li><li>'addhazard'</li><li>'addinsJoaoMelo'</li><li>'addinslist'</li><li>'addinsOutline'</li><li>'additive'</li><li>'additivityTests'</li><li>'addreg'</li><li>'ADDT'</li><li>'ade4'</li><li>'ade4TkGUI'</li><li>'adea'</li><li>'adegenet'</li><li>'adegraphics'</li><li>'adehabitatHR'</li><li>'adehabitatHS'</li><li>'adehabitatLT'</li><li>'adehabitatMA'</li><li>'adelie'</li><li>'adephylo'</li><li>'adepro'</li><li>'adept'</li><li>'adeptdata'</li><li>'AdequacyModel'</li><li>'ADER'</li><li>'adespatial'</li><li>'adestr'</li><li>'adfExplorer'</li><li>'adformR'</li><li>'ADGofTest'</li><li>'adheRenceRX'</li><li>'AdhereR'</li><li>'AdhereRViz'</li><li>'adimpro'</li><li>'AdIsMF'</li><li>'adiv'</li><li>'adjclust'</li><li>'adjROC'</li><li>'adjSURVCI'</li><li>'adjustedcranlogs'</li><li>'adjustedCurves'</li><li>'adklakedata'</li><li>'adlift'</li><li>'ADLP'</li><li>'admiral'</li><li>'admiral.test'</li><li>'admiraldev'</li><li>'admiralmetabolic'</li><li>'admiralonco'</li><li>⋯</li><li>'xegaBNF'</li><li>'xegaDerivationTrees'</li><li>'xegaDfGene'</li><li>'xegaGaGene'</li><li>'xegaGeGene'</li><li>'xegaGpGene'</li><li>'xegaPermGene'</li><li>'xegaPopulation'</li><li>'xegaSelectGene'</li><li>'xergm.common'</li><li>'xesreadR'</li><li>'xfun'</li><li>'xgb2sql'</li><li>'xgboost'</li><li>'xgrove'</li><li>'xgxr'</li><li>'xhaz'</li><li>'XICOR'</li><li>'XiMpLe'</li><li>'xkcd'</li><li>'xkcdcolors'</li><li>'XKCDdata'</li><li>'xlcharts'</li><li>'XLConnect'</li><li>'xlcutter'</li><li>'xLLiM'</li><li>'xlr'</li><li>'XLS'</li><li>'xlsform2word'</li><li>'xlsx'</li><li>'xlsx2dfs'</li><li>'xlsxjars'</li><li>'xmap'</li><li>'xmeta'</li><li>'XML'</li><li>'xml2'</li><li>'XML2R'</li><li>'xml2relational'</li><li>'xmlconvert'</li><li>'xmlparsedata'</li><li>'xmlr'</li><li>'xmlrpc2'</li><li>'xmlwriter'</li><li>'xmpdf'</li><li>'xmrr'</li><li>'xnet'</li><li>'XNomial'</li><li>'xoi'</li><li>'xopen'</li><li>'xpect'</li><li>'xpectr'</li><li>'xplain'</li><li>'xplorerr'</li><li>'Xplortext'</li><li>'xportr'</li><li>'xpose'</li><li>'xpose.nlmixr2'</li><li>'xpose.xtras'</li><li>'xpose4'</li><li>'XR'</li><li>'xray'</li><li>'xrf'</li><li>'xRing'</li><li>'XRJulia'</li><li>'xrnet'</li><li>'XRPython'</li><li>'XRSCC'</li><li>'xslt'</li><li>'xsp'</li><li>'xSub'</li><li>'xtable'</li><li>'xtranat'</li><li>'xts'</li><li>'xtsum'</li><li>'xtune'</li><li>'xutils'</li><li>'xVA'</li><li>'xvm'</li><li>'xwf'</li><li>'xxdi'</li><li>'xxhashlite'</li><li>'xxIRT'</li><li>'yacca'</li><li>'yaConsensus'</li><li>'yager'</li><li>'yahoofinancer'</li><li>'yaImpute'</li><li>'YaleToolkit'</li><li>'yaml'</li><li>'yamlet'</li><li>'yamlme'</li><li>'yardstick'</li><li>'yarrr'</li><li>'yasp'</li><li>'yatah'</li><li>'YatchewTest'</li><li>'YatesAlgo.FactorialExp.SR'</li><li>'ycevo'</li><li>'YEAB'</li><li>'yesno'</li><li>'yfinancer'</li><li>'yfR'</li><li>'yfscreen'</li><li>'yhat'</li><li>'yhatr'</li><li>'YieldCurve'</li><li>'yll'</li><li>'ymd'</li><li>'Ymisc'</li><li>'ymlthis'</li><li>'ympes'</li><li>'yodel'</li><li>'yorkr'</li><li>'youngSwimmers'</li><li>'YPBP'</li><li>'YPInterimTesting'</li><li>'YPmodel'</li><li>'YPmodelPhreg'</li><li>'YPPE'</li><li>'ypr'</li><li>'ypssc'</li><li>'YRmisc'</li><li>'YTAnalytics'</li><li>'yuima'</li><li>'yuimaGUI'</li><li>'yulab.utils'</li><li>'yum'</li><li>'yyjsonr'</li><li>'Z10'</li><li>'z22'</li><li>'zalpha'</li><li>'zCompositions'</li><li>'zctaCrosswalk'</li><li>'zcurve'</li><li>'zdeskR'</li><li>'zeallot'</li><li>'ZeBook'</li><li>'zebu'</li><li>'zeitgebr'</li><li>'zen4R'</li><li>'zendeskR'</li><li>'zendown'</li><li>'zenplots'</li><li>'zenstats'</li><li>'ZEP'</li><li>'zephyr'</li><li>'zeroEQpart'</li><li>'zetadiv'</li><li>'ZetaSuite'</li><li>'zfa'</li><li>'zfit'</li><li>'ZIBR'</li><li>'zic'</li><li>'zigg'</li><li>'ZillowR'</li><li>'ZIM'</li><li>'ZIM4rv'</li><li>'ZINAR1'</li><li>'ZINARp'</li><li>'zip'</li><li>'zipangu'</li><li>'ZIPBayes'</li><li>'zipcodeR'</li><li>'ZIPFA'</li><li>'zipfextR'</li><li>'zipfR'</li><li>'ZIPG'</li><li>'zippeR'</li><li>'zipR'</li><li>'ZIprop'</li><li>'zipsae'</li><li>'ZLAvian'</li><li>'zlib'</li><li>'zlog'</li><li>'zmisc'</li><li>'zoeppritz'</li><li>'zoib'</li><li>'zoid'</li><li>'zoltr'</li><li>'zonebuilder'</li><li>'zonohedra'</li><li>'zoo'</li><li>'ZooID'</li><li>'zooimage'</li><li>'zoolog'</li><li>'zoom'</li><li>'zoomerjoin'</li><li>'zoomGroupStats'</li><li>'zoomr'</li><li>'ZRA'</li><li>'zscorer'</li><li>'Zseq'</li><li>'ztable'</li><li>'ztils'</li><li>'ztpln'</li><li>'zTree'</li><li>'ztype'</li><li>'ZVCV'</li><li>'zyp'</li><li>'zzlite'</li></ol>
+</div>
+</div>
+<p>To install a package from CRAN, use the function <code>install.packages()</code></p>
+<div id="cell-170" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into 'C:/Users/ASUS/AppData/Local/R/win-library/4.5'
+(as 'lib' is unspecified)
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'ggplot2' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\ASUS\AppData\Local\Temp\RtmpYjHpLy\downloaded_packages</code></pre>
+</div>
+</div>
+<p>We can also install several packages at once by the help of combine function.</p>
+<div id="cell-172" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"stringr"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing packages into 'C:/Users/ASUS/AppData/Local/R/win-library/4.5'
+(as 'lib' is unspecified)
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'dplyr' successfully unpacked and MD5 sums checked</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message:
+"cannot remove prior installation of package 'dplyr'"
+Warning message in file.copy(savedcopy, lib, recursive = TRUE):
+"problem copying C:\Users\ASUS\AppData\Local\R\win-library\4.5\00LOCK\dplyr\libs\x64\dplyr.dll to C:\Users\ASUS\AppData\Local\R\win-library\4.5\dplyr\libs\x64\dplyr.dll: Permission denied"
+Warning message:
+"restored 'dplyr'"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'tidyr' successfully unpacked and MD5 sums checked</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message:
+"cannot remove prior installation of package 'tidyr'"
+Warning message in file.copy(savedcopy, lib, recursive = TRUE):
+"problem copying C:\Users\ASUS\AppData\Local\R\win-library\4.5\00LOCK\tidyr\libs\x64\tidyr.dll to C:\Users\ASUS\AppData\Local\R\win-library\4.5\tidyr\libs\x64\tidyr.dll: Permission denied"
+Warning message:
+"restored 'tidyr'"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'stringr' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\ASUS\AppData\Local\Temp\RtmpYjHpLy\downloaded_packages</code></pre>
+</div>
+</div>
+<p>Some package may not available on CRAN but on GitHub repository. We are required to install additional tools in order to install it.</p>
+<div id="cell-174" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rtools is required but may be automatically downloaded and installed if needed</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://cran.r-project.org/bin/windows/Rtools/</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First install the devtools/remotes package</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)  <span class="co"># or remotes</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Then install from GitHub</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/ggplot2"</span>)</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"tidyverse/ggplot2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into 'C:/Users/ASUS/AppData/Local/R/win-library/4.5'
+(as 'lib' is unspecified)
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'devtools' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\ASUS\AppData\Local\Temp\RtmpYjHpLy\downloaded_packages</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into 'C:/Users/ASUS/AppData/Local/R/win-library/4.5'
+(as 'lib' is unspecified)
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'remotes' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\ASUS\AppData\Local\Temp\RtmpYjHpLy\downloaded_packages</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using GitHub PAT from the git credential store.
+
+Downloading GitHub repo tidyverse/ggplot2@HEAD
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-cyan-fg">──</span> <span class="ansi-cyan-fg">R CMD build</span> <span class="ansi-cyan-fg">─────────────────────────────────────────────────────────────────</span>
+
+* checking for file 'C:\Users\ASUS\AppData\Local\Temp\RtmpYjHpLy\remotesd3c7ac91a3b\tidyverse-ggplot2-bed8e32/DESCRIPTION' ... OK
+
+* preparing 'ggplot2':
+
+* checking DESCRIPTION meta-information ... OK
+
+* checking for LF line-endings in source and make files and shell scripts
+
+* checking for empty or unneeded directories
+
+* building 'ggplot2_3.5.2.9002.tar.gz'
+
+
+</pre>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into 'C:/Users/ASUS/AppData/Local/R/win-library/4.5'
+(as 'lib' is unspecified)
+
+Using GitHub PAT from the git credential store.
+
+Skipping install of 'ggplot2' from a github remote, the SHA1 (bed8e32d) has not changed since last install.
+  Use `force = TRUE` to force installation
+</code></pre>
+</div>
+</div>
+<p>We check the outdated packages by the <code>old.packages()</code> function.</p>
+<div id="cell-176" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">old.packages</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<table class="dataframe caption-top table table-sm table-striped small">
+<caption>A matrix: 6 × 6 of type chr</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th" scope="col">Package</th>
+<th data-quarto-table-cell-role="th" scope="col">LibPath</th>
+<th data-quarto-table-cell-role="th" scope="col">Installed</th>
+<th data-quarto-table-cell-role="th" scope="col">Built</th>
+<th data-quarto-table-cell-role="th" scope="col">ReposVer</th>
+<th data-quarto-table-cell-role="th" scope="col">Repository</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">broom</th>
+<td>broom</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>1.0.8</td>
+<td>4.5.0</td>
+<td>1.0.9</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">DataExplorer</th>
+<td>DataExplorer</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>0.8.3</td>
+<td>4.5.0</td>
+<td>0.8.4</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">dials</th>
+<td>dials</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>1.4.0</td>
+<td>4.5.0</td>
+<td>1.4.1</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">future</th>
+<td>future</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>1.58.0</td>
+<td>4.5.0</td>
+<td>1.67.0</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th" scope="row">rsample</th>
+<td>rsample</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>1.3.0</td>
+<td>4.5.0</td>
+<td>1.3.1</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th" scope="row">statsExpressions</th>
+<td>statsExpressions</td>
+<td>C:/Users/ASUS/AppData/Local/R/win-library/4.5</td>
+<td>1.7.0</td>
+<td>4.5.0</td>
+<td>1.7.1</td>
+<td>https://cran.r-project.org/src/contrib</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>To update the outdated package, use the <code>update.packages()</code> function.</p>
+<div id="cell-178" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>(<span class="st">"curl"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If some packages are not needed and we want to uninstall or remove them, use the <code>remove.packages()</code> function. For example,</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">remove.packages</span>(<span class="st">"package"</span>)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">c</span>(<span class="st">"package1"</span>, <span class="st">"package2"</span>), <span class="fu">remove.packages</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To get the documentation of a package, we use the <code>library(help = "package")</code> function.</p>
+<div id="cell-181" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(help = "ggplot2") # nolint</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To load a package for usage, we use <code>library(package = "package")</code>.</p>
+<div id="cell-183" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;vscode&quot;,&quot;value&quot;:{&quot;languageId&quot;:&quot;r&quot;}}" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>base<span class="sc">::</span><span class="fu">library</span>(<span class="at">package =</span> <span class="st">"ggplot2"</span>)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>(</span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> ggplot2<span class="sc">::</span><span class="fu">aes</span>(</span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.5</span>,</span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"blue"</span>,</span>
+<span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"cyan"</span></span>
+<span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb94-13"><a href="#cb94-13" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggtitle</span>(<span class="at">label =</span> <span class="st">"Box Plot"</span>) <span class="sc">+</span></span>
+<span id="cb94-14"><a href="#cb94-14" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">xlab</span>(<span class="at">label =</span> <span class="st">"Data"</span>) <span class="sc">+</span></span>
+<span id="cb94-15"><a href="#cb94-15" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ylab</span>(<span class="at">label =</span> <span class="st">"Distribution"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="1.introduction_files/figure-html/cell-38-output-1.png" width="420" height="420" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
